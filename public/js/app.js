@@ -13892,6 +13892,7 @@ window.Vue = __webpack_require__(36);
  */
 
 Vue.component('flash', __webpack_require__(39));
+Vue.component('reply', __webpack_require__(52));
 
 var app = new Vue({
   el: '#app'
@@ -13941,22 +13942,13 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+window.Vue = __webpack_require__(36);
 
-// import Echo from 'laravel-echo'
+window.events = new Vue();
 
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
+window.flash = function (message) {
+  window.events.$emit('flash', message);
+};
 
 /***/ }),
 /* 14 */
@@ -47715,11 +47707,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         if (this.message) {
-            this.body = this.message;
+            this.flash(this.message);
+        }
+
+        window.events.$on('flash', function (message) {
+            return _this.flash(message);
+        });
+    },
+
+
+    methods: {
+        flash: function flash(message) {
+            this.body = message;
             this.show = true;
 
+            this.hide();
+        },
+        hide: function hide() {
+            var _this2 = this;
+
             setTimeout(function () {
-                _this.show = false;
+                _this2.show = false;
             }, 3000);
         }
     }
@@ -47759,7 +47767,222 @@ if (false) {
 /* 48 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Missing binding /var/www/html/forumLaravel/node_modules/node-sass/vendor/linux-x64-57/binding.node\nNode Sass could not find a binding for your current environment: Linux 64-bit with Node.js 8.x\n\nFound bindings for the following environments:\n  - Linux 64-bit with Node.js 4.x\n\nThis usually happens because your environment has changed since running `npm install`.\nRun `npm rebuild node-sass --force` to build the binding for your current environment.\n    at module.exports (/var/www/html/forumLaravel/node_modules/node-sass/lib/binding.js:15:13)\n    at Object.<anonymous> (/var/www/html/forumLaravel/node_modules/node-sass/lib/index.js:14:35)\n    at Module._compile (module.js:652:30)\n    at Object.Module._extensions..js (module.js:663:10)\n    at Module.load (module.js:565:32)\n    at tryModuleLoad (module.js:505:12)\n    at Function.Module._load (module.js:497:3)\n    at Module.require (module.js:596:17)\n    at require (internal/module.js:11:18)\n    at Object.<anonymous> (/var/www/html/forumLaravel/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (module.js:652:30)\n    at Object.Module._extensions..js (module.js:663:10)\n    at Module.load (module.js:565:32)\n    at tryModuleLoad (module.js:505:12)\n    at Function.Module._load (module.js:497:3)\n    at Module.require (module.js:596:17)\n    at require (internal/module.js:11:18)\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:13:17)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at runLoaders (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:170:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:27:11)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:173:18\n    at loadLoader (/var/www/html/forumLaravel/node_modules/loader-runner/lib/loadLoader.js:36:3)\n    at iteratePitchingLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/var/www/html/forumLaravel/node_modules/loader-runner/lib/LoaderRunner.js:362:2)\n    at NormalModule.doBuild (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/var/www/html/forumLaravel/node_modules/webpack/lib/Compilation.js:151:10)\n    at moduleFactory.create (/var/www/html/forumLaravel/node_modules/webpack/lib/Compilation.js:454:10)\n    at factory (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModuleFactory.js:243:5)\n    at applyPluginsAsyncWaterfall (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModuleFactory.js:94:13)\n    at /var/www/html/forumLaravel/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (/var/www/html/forumLaravel/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/var/www/html/forumLaravel/node_modules/tapable/lib/Tapable.js:272:13)\n    at resolver (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModuleFactory.js:69:10)\n    at process.nextTick (/var/www/html/forumLaravel/node_modules/webpack/lib/NormalModuleFactory.js:196:7)\n    at _combinedTickCallback (internal/process/next_tick.js:131:7)");
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(45)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Reply.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2d8b1643", Component.options)
+  } else {
+    hotAPI.reload("data-v-2d8b1643", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Favorite_vue__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Favorite_vue__);
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['attributes'],
+
+    components: { Favorite: __WEBPACK_IMPORTED_MODULE_0__Favorite_vue___default.a },
+
+    data: function data() {
+        return {
+            editing: false,
+            body: this.attributes.body
+        };
+    },
+
+
+    methods: {
+        update: function update() {
+            axios.patch('/replies/' + this.attributes.id, {
+                body: this.body
+            });
+            this.editing = false;
+
+            flash('updated!');
+        },
+        destroy: function destroy() {
+            axios.delete('/replies/' + this.attributes.id);
+            $(this.$el).fadeOut(300, function () {
+                flash('your reply has been deleted');
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(45)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Favorite.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-08d814d3", Component.options)
+  } else {
+    hotAPI.reload("data-v-08d814d3", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['reply'],
+    data: function data() {
+        return {
+            favoritesCount: this.reply.favoritesCount,
+            isFavorited: this.reply.isFavorited
+        };
+    },
+
+
+    computed: {
+        classes: function classes() {
+            return ['btn', this.isFavorited ? 'btn-primary' : 'btn-default'];
+        }
+    },
+
+    methods: {
+        toggle: function toggle() {
+            if (this.isFavorited) {
+                axios.delete('/replies/' + this.reply.id + '/favorites');
+                this.isFavorited = false;
+                this.favoritesCount--;
+            } else {
+                axios.post('/replies/' + this.reply.id + '/favorites');
+                this.isFavorited = true;
+                this.favoritesCount++;
+            }
+        }
+    }
+
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("button", { class: _vm.classes, on: { click: _vm.toggle } }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("span", { domProps: { textContent: _vm._s(_vm.favoritesCount) } })
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-heart f004" })])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-08d814d3", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

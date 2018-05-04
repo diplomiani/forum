@@ -30,9 +30,18 @@ Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy')->name(
 
 //Replies Controller
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('replies.store');
+Route::patch('/replies/{reply}', 'RepliesController@update')->name('replies.update');
+Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
 
 //Favorite Controller
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store')->name('favorite.store');
+Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy')->name('favorite.destroy');
 
 //Profile Controller
 Route::get('profiles/{user}', 'ProfilesController@show')->name('profiles.show');
+
+
+
+Route::get('products', function(){
+	return App\Product::where('price', "<=", 100000)->latest()->get();
+});

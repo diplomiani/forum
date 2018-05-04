@@ -57,3 +57,12 @@
     </div>
 </div>
 @endsection
+
+{{-- @push('script')
+    <script type="text/javascript">
+        Vue.component('reply', {});
+        new Vue({
+          el: '#app'
+        });
+    </script>
+@endpush --}}

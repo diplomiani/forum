@@ -4,6 +4,12 @@ namespace App;
 
 trait Favoritable
 {
+    public static function bootFavoritable(){
+        static::deleting(function ($model){
+            $model->favorites->each->delete();
+        });
+    }
+
     /**
      * A reply can be favorited
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
@@ -26,12 +32,27 @@ trait Favoritable
     }
 
     /**
+     * Un Favorited the current reply
+     * @return Model
+     */
+    public function unfavorited()
+    {
+        $attributes = ['user_id' => auth()->id()];
+        return $this->favorites()->where($attributes)->get()->each->delete();
+    }
+
+    /**
      * Determine if the current reply has been favorited.
      * @return boolean
      */
     public function isFavorited()
     {
         return !!$this->favorites->where('user_id', auth()->id())->count();
+    }
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
     }
 
     public function getFavoritesCountAttribute()

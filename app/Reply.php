@@ -8,7 +8,23 @@ class Reply extends Model
 {
     use Favoritable, RecordsActivity;
 
+    protected $guarded = [];
+
     protected $with = ['owner', 'favorites'];
+
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
+    /**
+     * boot the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($reply) {
+            $reply->favorites->each->delete();
+        });
+    }
 
     public function owner()
     {
