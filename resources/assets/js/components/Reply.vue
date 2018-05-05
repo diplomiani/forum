@@ -4,7 +4,7 @@
         <div :id="'reply-'+id" class="card-header">
             <div class="level">
                 <h5 class="flex">
-                    <a href="'/profiles/'+data.owner.name"
+                    <a :href="'/profiles/' + data.owner.name"
                         v-text="data.owner.name">
                     </a>
                     said {{ data.created_at }}...

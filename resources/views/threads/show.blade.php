@@ -29,22 +29,17 @@
                         {{ $thread->body }}
                     </div>
                     <br>
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                    <replies 
+                        :data="{{ $thread->replies }}" 
+                        @removed="repliesCount--"
+                        @added="repliesCount++">
+                            
+                    </replies>
                     {{-- @foreach($replies as $reply)
                         @include('threads.reply')
                     @endforeach
 
                     {{ $replies->links() }} --}}
-
-                    @auth
-                        <form method="Post" action="/threads/{{ $thread->channel->slug }}/{{ $thread->id }}/replies">
-                            @csrf
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" name="body" placeholder="your meesage..."></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success">Post</button>
-                        </form>
-                    @endauth
                 </div>
             </div>
             <div class="col-md-4">
