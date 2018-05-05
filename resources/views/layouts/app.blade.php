@@ -19,6 +19,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
 
+    <script type="text/javascript">
+        window.App = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'signdIn' => Auth::check(),
+            'user' => Auth::user(),
+        ]) !!};
+    </script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
