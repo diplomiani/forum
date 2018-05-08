@@ -29,8 +29,7 @@
                         {{ $thread->body }}
                     </div>
                     <br>
-                    <replies 
-                        :data="{{ $thread->replies }}" 
+                    <replies
                         @removed="repliesCount--"
                         @added="repliesCount++">
                             

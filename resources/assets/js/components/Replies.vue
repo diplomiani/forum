@@ -1,41 +1,57 @@
 <template>
 	<div>
 		<div v-for="(reply, index) in items">
-			<reply :data="reply" @deleted="remove(index)"></reply>
+			<reply :data="reply" @deleted="remove(index)" :key="reply.id"></reply>
 		</div>
 
-		<new-reply :endpoint="endpoint" @created="add"></new-reply>
+        <paginate :dataSet="dataSet" @update="fetch"></paginate>
+        <new-reply @created="add"></new-reply>
 	</div>
 </template>
 
 <script>
 	import Reply from './Reply.vue';
-	import NewReply from './NewReply.vue';
+    import NewReply from './NewReply.vue';
+	import Collection from '../mixins/Collection.vue';
 
     export default {
 
     	components: {Reply , NewReply},
-    	props: ['data'],
+
+        mixins:[Collection],
 
     	data(){
     		return {
-    			items: this.data,
-    			endpoint:location.pathname +'/replies',
+                dataSet: false,
+    			items: [],
     		}
     	},
 
+        created(){
+            this.fetch();
+        },
+
     	methods: {
-    		add(reply){
-    			this.items.push(reply);
-    			this.$emit('added');
-    		},
-    		remove(index){
-    			this.items.splice(index, 1);
 
-    			this.$emit('removed');
+            fetch(page){
+                axios.get(this.url(page))
+                    .then(this.refresh);
+            },
 
-    			flash('reply was deleted !');
-    		}
+            url(page){
+
+                if(! page){
+                    let query = location.search.match(/page=(\d+)/);
+                    page = query ? query[1] : 1 ;
+                }
+
+                return `${location.pathname}/replies?page=` + page;
+            },
+
+            refresh({data}){
+                this.dataSet = data;
+                this.items = data.data;
+            }
     	}
         
         
