@@ -34,15 +34,24 @@ Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->n
 Route::patch('/replies/{reply}', 'RepliesController@update')->name('replies.update');
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
 
+// subscriptions
+Route::post('/threads/{channel}/{thread}/subscriptions', 'SubscriptionsController@store')
+	->name('subscriptions.store')
+	->middleware('auth');
+
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'SubscriptionsController@destroy')
+	->name('subscriptions.destroy')
+	->middleware('auth');
+
+
 //Favorite Controller
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store')->name('favorite.store');
 Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy')->name('favorite.destroy');
 
 //Profile Controller
 Route::get('profiles/{user}', 'ProfilesController@show')->name('profiles.show');
+Route::get('profiles/{user}/notifications', 'UsersNotificationsController@index')->name('notification.index');
+Route::delete('profiles/{user}/notifications/{notification}', 'UsersNotificationsController@destroy')->name('notification.destroy');
 
 
 
-Route::get('products', function(){
-	return App\Product::where('price', "<=", 100000)->latest()->get();
-});

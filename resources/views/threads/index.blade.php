@@ -12,7 +12,14 @@
                         <div class="level">
                             <h4 class="flex">
                                 <a href="/threads/{{ $thread->channel->slug }}/{{ $thread->id }}">
-                                {{ $thread->title }}
+                                    
+                                    @if(auth()->check() && $thread->hasUpdateFor(auth()->user()))
+                                        <strong>
+                                            {{ $thread->title }}
+                                        </strong>
+                                    @else
+                                        {{ $thread->title }}
+                                    @endif
                                 </a>
                             </h4>
                             <a href="/threads/{{ $thread->channel->slug }}/{{ $thread->id }}">

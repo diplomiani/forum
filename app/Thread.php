@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\ThreadWasUpdate;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -16,6 +17,8 @@ class Thread extends Model
     protected $guarded = [];
 
     protected $with = ['creator', 'channel'];
+
+    protected $appends = ['isSubscribedTo'];
 
     /**
      * Get a string path for the thread
@@ -81,12 +84,61 @@ class Thread extends Model
      **/
     public function addReply($reply)
     {
-        return $this->replies()->forceCreate($reply);
+        $reply = $this->replies()->forceCreate($reply);
 
+        foreach($this->subscriptions as $subscription){
+            if($subscription->user_id != $reply->user_id){
+                $subscription->user->notify(new ThreadWasUpdate($this, $reply));
+            }
+        }
+
+        return $reply;
     }
 
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
     }
+
+
+
+    
+    public function subscribe($userId = null)
+    {
+        $this->subscriptions()->create([
+            'user_id' => $userId ? : auth()->id()
+        ]);
+
+        return $this;
+    }
+
+    public function unsubscribe($userId = null)
+    {
+        $this->subscriptions()
+            ->where('user_id', $userId ?: auth()->id())
+            ->delete();
+    }
+
+    /**
+    * A ThreadSubscription May have Many Models,
+    *
+    * @return \Illuminate\Database\Eluqment\Relations\HasMany
+    **/
+    public function subscriptions()
+    {
+        return $this->hasMany(ThreadSubscription::class);
+    }
+
+    public function getIsSubscribedToAttribute(){
+        return $this->subscriptions()
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+
+
+    public function hasUpdateFor(){
+        $key = auth()->user()->visitedThreadCacheKey($this);
+        return $this->updated_at > cache($key);
+    }
+    
 }
